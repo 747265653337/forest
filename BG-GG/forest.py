@@ -1,8 +1,7 @@
-import math, time, random, turtle
-
-
-def map(n, start1, stop1, start2, stop2):
-    return((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2
+import math
+import time
+import random
+import turtle
 
 
 branchlimit = 10
@@ -57,8 +56,6 @@ def floor(t, windowwidth, windowheight, height, color, treeamount):
         turtle.update()
     t.color(planetcolor)
     t.forward(dist/2)
-
-
 
 
 lengthrange = (100, 130)
