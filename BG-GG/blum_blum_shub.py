@@ -63,8 +63,10 @@ class BlumBlumShub():
         self.state = self.state**2 % self.M
         return self.state
 
-    def __init__(self, bits=32, seed=None):
-        self.M = self.getM(bits)
+    def __init__(self, bits=32, seed=None, M=None):
+        self.M = M
+        if self.M == None:
+            self.M = self.getM(bits)
         self.seed = seed
         if self.seed == None:
             self.getSeed(bits)
