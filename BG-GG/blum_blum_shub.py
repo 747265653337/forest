@@ -1,4 +1,5 @@
-import math, random
+import random
+
 
 class BlumBlumShub():
 
@@ -7,7 +8,7 @@ class BlumBlumShub():
     # get big primes with miller-rabin test
     def miller_rabin_test(self, num_to_check, amnt_of_checks=40):
 
-        # remove the 2 base cases, which interfere with the code
+        # remove the 2 base cases, which interfere with the algorithm
         if num_to_check == 2 or num_to_check == 3:
             return True
 
@@ -15,10 +16,10 @@ class BlumBlumShub():
         if num_to_check % 2 == 0:
             return False
 
-        # ha I can now assign multiple variables on one line
+        # ha I can now asign multiple variables on one line
         r, d = 0, num_to_check - 1
 
-        # get r and d for num_to_check = 2^r * d + 1
+        # get r and d for: num_to_check = 2^r * d + 1
         while d % 2 == 0:
             r += 1
             d //= 2
@@ -39,36 +40,40 @@ class BlumBlumShub():
 
     # get prime for that p % 4 == 3
     def getPrime(self, bits):
-        candidate = random.getrandbits(bits) | 1 #ensures odd number
+        candidate = random.getrandbits(bits) | 1  # ensures odd number
 
-        while 1:
+        for _ in range(100000):
             if self.miller_rabin_test(candidate) and candidate & 3 == 3:
                 return candidate
             candidate += 2
-
+        raise Exception("Timed out, in {self}.getPrime")
 
     def getM(self, bits):
         p1 = self.getPrime(bits//2)
-        while 1:
+        for _ in range(100000):
             p2 = self.getPrime(bits//2)
             if p1 != p2:
                 return p1 * p2
+        raise Exception("Timed out, in {self}.getM")
 
     def getSeed(self, bits):
-        return random.getrandbits(bits)
-    
+        self.seed = random.getrandbits(bits)
+
     def nextpseudorand(self):
         self.state = self.state**2 % self.M
         return self.state
 
-    def __init__(self, bits = 32):
+    def __init__(self, bits=32, seed=None):
         self.M = self.getM(bits)
-        self.seed = self.getSeed(bits)
+        self.seed = seed
+        if self.seed == None:
+            self.getSeed(bits)
+        print(f'{self.seed = }')
         self.state = self.seed
         print('initialized')
+
 
 if __name__ == "__main__":
     BBS = BlumBlumShub(32)
     for _ in range(200):
-        print(len(str(bin(BBS.nextpseudorand()))))
-        
+        print(BBS.nextpseudorand() % 2)
