@@ -71,8 +71,8 @@ class BlumBlumShub():
         if self.seed == None:
             self.getSeed(bits)
         print(f'{self.seed = }')
+        print(f'{self.M = }')
         self.state = self.seed
-        print('initialized')
 
 
 if __name__ == "__main__":
