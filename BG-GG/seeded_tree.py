@@ -4,15 +4,23 @@ import map
 
 
 def branch(blum_blum_shub_object, length, position=(0, 0), direction=90):
-    if length < 20:
-        return
     # setup
     pen = turtle.Turtle()
     pen.ht()
     turtle.tracer()
+    turtle.speed(100000)
     pen.penup()
     pen.setposition(position)
     pen.pendown()
+    
+    if length < 20:
+        pen.pencolor("green")
+        pen.pensize(10)
+        pen.fd(1)
+        pen.backward(1)
+        pen.pencolor("black")
+        return
+    
     pen.setheading(direction)
 
     # calc params
